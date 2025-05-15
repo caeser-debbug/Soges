@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soges Sécurité</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #121212;
+            color: #e0e0e0;
+            font-family: 'Arial', sans-serif;
+        }
+        .section-bg {
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7));
+        }
+        .mobile-menu {
+            transform: translateX(100%);
+            transition: transform 0.3s ease-in-out;
+        }
+        .mobile-menu.active {
+            transform: translateX(0);
+        }
+    </style>
+</head>
+<body>
+    <div class="container mx-auto px-4">
+        <!-- Header -->
+        <header class="fixed top-0 left-0 w-full z-50 bg-white shadow-md">
+            <div class="container mx-auto flex justify-between items-center p-4">
+                <div class="flex items-center">
+                    <img src="images/logo.jpg" alt="Logo" class="h-12 w-12 mr-4 rounded-full">
+                    <h1 class="text-2xl font-bold text-blue-600" style="color: #c59b73;">Soges Sécurité</h1>
+                </div>
+                
+                <nav class="hidden md:flex space-x-6">
+                    <a href="index.html" class="text-gray-700 hover:text-blue-600 transition" style="color: #c59b73;">Accueil</a>
+                    <a href="devis.html" class="text-gray-700 hover:text-blue-600 transition" style="color: #c59b73;">Faire un devis</a>
+                    <a href="contact.html" class="bg-blue-600 text-white px-4 py-2 rounded-full hover:bg-blue-700 transition" style="background-color: #c59b73;">Contact</a>
+                </nav>
+    
+                <button class="md:hidden mobile-menu-toggle" style="color: black;">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
+            </div>
+    
+            <div class="mobile-menu fixed top-0 right-0 w-64 h-full bg-white shadow-lg md:hidden" style="color: black;">
+                <button class="mobile-menu-close absolute top-4 right-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+                <nav class="flex flex-col p-6 mt-16">
+                    <a href="index.html" class="py-3 border-b text-gray-700 hover:text-blue-600">Accueil</a>
+                    <a href="devis.html" class="py-3 border-b text-gray-700 hover:text-blue-600">Faire un devis</a>
+                    <a href="contact.html" class="py-3 text-gray-700 hover:text-blue-600">Contact</a>
+                </nav>
+            </div>
+        </header>
+
+        <!-- Intervention Rapide -->
+        <section class="my-16" style="margin-top: 100px;">
+            <div class="grid md:grid-cols-2 gap-8 items-center">
+                <div>
+                    <h2 class="text-3xl text-blue-500 mb-6" style="color: #c59b73;">Intervention Rapide</h2>
+                    <p class="text-lg mb-4">Nos équipes sont formées pour réagir instantanément face à toute situation critique. Avec un temps de réponse minimal et une préparation tactique maximale, nous garantissons une intervention précise et efficace.</p>
+                    <ul class="space-y-3">
+                        <li class="flex items-center">
+                            <svg class="w-6 h-6 text-blue-500 mr-3" fill="currentColor" viewBox="0 0 20 20" style="color: #c59b73;">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.707l-3-3a1 1 0 00-1.414 1.414L10.586 9H7a1 1 0 100 2h3.586l-1.293 1.293a1 1 0 101.414 1.414l3-3a1 1 0 000-1.414z" clip-rule="evenodd"/>
+                            </svg>
+                            Temps de réponse garanti
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-6 h-6 text-blue-500 mr-3" fill="currentColor" viewBox="0 0 20 20" style="color: #c59b73;">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.707l-3-3a1 1 0 00-1.414 1.414L10.586 9H7a1 1 0 100 2h3.586l-1.293 1.293a1 1 0 101.414 1.414l3-3a1 1 0 000-1.414z" clip-rule="evenodd"/>
+                            </svg>
+                            Équipement tactique de pointe
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-6 h-6 text-blue-500 mr-3" fill="currentColor" viewBox="0 0 20 20" style="color: #c59b73;">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.707l-3-3a1 1 0 00-1.414 1.414L10.586 9H7a1 1 0 100 2h3.586l-1.293 1.293a1 1 0 101.414 1.414l3-3a1 1 0 000-1.414z" clip-rule="evenodd"/>
+                            </svg>
+                            Formation intensive continue
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <img src="images/intervention.jpg" alt="Intervention Rapide" class="rounded-lg shadow-xl">
+                </div>
+            </div>
+        </section>
+
+        <!-- Formation et Discipline -->
+        <section class="my-16">
+            <div class="grid md:grid-cols-2 gap-8 items-center">
+                <div>
+                    <img src="images/discipline.jpg" alt="Formation Professionnelle" class="rounded-lg shadow-xl">
+                </div>
+                <div>
+                    <h2 class="text-3xl text-blue-500 mb-6" style="color: #c59b73;">Formation & Discipline</h2>
+                    <p class="text-lg mb-4">Notre engagement commence par une formation rigoureuse. Chaque agent Soges Group suit un programme intensif qui développe non seulement ses compétences techniques, mais aussi son éthique professionnelle.</p>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <h3 class="text-xl text-blue-400 mb-2" style="color: #c59b73;">Connaissance</h3>
+                            <p>Formation technique approfondie</p>
+                        </div>
+                        <div>
+                            <h3 class="text-xl text-blue-400 mb-2" style="color: #c59b73;">Discipline</h3>
+                            <p>Protocoles stricts et rigueur</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="my-16">
+            <div class="grid md:grid-cols-2 gap-8 items-center">
+                <div>
+                    <h2 class="text-3xl text-blue-500 mb-6" style="color: #c59b73;">Un esprit de protection avec l'unite canine</h2>
+                    <p class="text-lg mb-4">Nos chiens sont formées pour réagir instantanément face à toute situation critique. nous garantissons une intervention précise et efficace.</p>
+                    <ul class="space-y-3">
+                        <li class="flex items-center">
+                            <svg class="w-6 h-6 text-blue-500 mr-3" fill="currentColor" viewBox="0 0 20 20" style="color: #c59b73;">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.707l-3-3a1 1 0 00-1.414 1.414L10.586 9H7a1 1 0 100 2h3.586l-1.293 1.293a1 1 0 101.414 1.414l3-3a1 1 0 000-1.414z" clip-rule="evenodd"/>
+                            </svg>
+                            Chien bien eduque
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-6 h-6 text-blue-500 mr-3" fill="currentColor" viewBox="0 0 20 20" style="color: #c59b73;">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.707l-3-3a1 1 0 00-1.414 1.414L10.586 9H7a1 1 0 100 2h3.586l-1.293 1.293a1 1 0 101.414 1.414l3-3a1 1 0 000-1.414z" clip-rule="evenodd"/>
+                            </svg>
+                            sécurité optimale
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-6 h-6 text-blue-500 mr-3" fill="currentColor" viewBox="0 0 20 20" style="color: #c59b73;">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.707l-3-3a1 1 0 00-1.414 1.414L10.586 9H7a1 1 0 100 2h3.586l-1.293 1.293a1 1 0 101.414 1.414l3-3a1 1 0 000-1.414z" clip-rule="evenodd"/>
+                            </svg>
+                            Formation intensive continue
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <img src="images/chien.jpg" alt="Intervention Rapide" class="rounded-lg shadow-xl">
+                </div>
+            </div>
+        </section>
+
+        <!-- Pourquoi Choisir Soges Group -->
+        <section class="my-16 text-center">
+            <h2 class="text-4xl text-blue-500 mb-8" style="color: #c59b73;">Pourquoi Soges Group ?</h2>
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="bg-gray-800 p-6 rounded-lg">
+                    <svg class="w-16 h-16 mx-auto text-blue-500 mb-4" fill="currentColor" viewBox="0 0 20 20" style="color: #c59b73;">
+                        <path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z"/>
+                    </svg>
+                    <h3 class="text-xl text-blue-400 mb-3" style="color: #c59b73;">Expertise</h3>
+                    <p>Plus de 10 ans d'expérience dans la sécurité</p>
+                </div>
+                <div class="bg-gray-800 p-6 rounded-lg">
+                    <svg class="w-16 h-16 mx-auto text-blue-500 mb-4" fill="currentColor" viewBox="0 0 20 20" style="color: #c59b73;">
+                        <path fill-rule="evenodd" d="M10 2a4 4 0 00-4 4v1H5a1 1 0 00-.994.89l-1 9A1 1 0 005 18h10a1 1 0 001.994.11l-1-9A1 1 0 0015 7h-1V6a4 4 0 00-4-4zm2 5V6a2 2 0 10-4 0v1h4zm-6 3a1 1 0 112 0 1 1 0 01-2 0zm7-1a1 1 0 100 2 1 1 0 000-2z" clip-rule="evenodd"/>
+                    </svg>
+                    <h3 class="text-xl text-blue-400 mb-3" style="color: #c59b73;">Protection</h3>
+                    <p>Solutions personnalisées et adaptatives</p>
+                </div>
+                <div class="bg-gray-800 p-6 rounded-lg">
+                    <svg class="w-16 h-16 mx-auto text-blue-500 mb-4" fill="currentColor" viewBox="0 0 20 20" style="color: #c59b73;">
+                        <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/>
+                        <path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd"/>
+                    </svg>
+                    <h3 class="text-xl text-blue-400 mb-3" style="color: #c59b73;">Réactivité</h3>
+                    <p>Interventions rapides, analyse immédiate</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Call to Action -->
+        <section class="text-center py-16 bg-blue-900 rounded-lg" style="margin-bottom: 30px; background-color: #c59b73;">
+            <h2 class="text-4xl text-white mb-6">Votre Sécurité, Notre Engagement</h2>
+            <p class="text-xl text-blue-200 mb-8" style="color: #c59b73;">Contactez Soges Group pour une protection intelligente et professionnelle</p>
+            <a href="#" class="bg-blue-500 text-white px-10 py-4 rounded-full text-xl hover:bg-blue-600 transition" style="background-color: black; color: #c59b73;">Demander un Devis</a>
+        </section>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+            const mobileMenuClose = document.querySelector('.mobile-menu-close');
+            const mobileMenu = document.querySelector('.mobile-menu');
+
+            mobileMenuToggle.addEventListener('click', () => {
+                mobileMenu.classList.add('active');
+            });
+
+            mobileMenuClose.addEventListener('click', () => {
+                mobileMenu.classList.remove('active');
+            });
+
+            // Smooth scrolling
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                    mobileMenu.classList.remove('active');
+                });
+            });
+        });
+    </script>
+</body>
+</html>

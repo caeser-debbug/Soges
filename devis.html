@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Devis en Ligne - Soges Sécurité</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .floating-buttons {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 50;
+        }
+        .floating-buttons button {
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <nav class="bg-blue-600 text-white p-4" style="background-color: white;" >
+        <div class="container mx-auto flex justify-between items-center">
+            <div class="text-xl font-bold" style="color: #c59b73;">Soges Sécurité</div>
+            <div>
+                <a href="index.html" class="mx-2" style="color: #c59b73;">Accueil</a>
+                <a href="a_propos.html" class="mx-2" style="color: #c59b73;">A propos</a>
+                <a href="contact.html" class="mx-2" style="color: #c59b73;" >Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mx-auto px-4 py-8">
+        <div class="max-w-2xl mx-auto bg-white p-8 rounded-lg shadow-md">
+            <h1 class="text-2xl font-bold mb-6 text-center text-blue-600" style="color: #c59b73;">Demande de Devis</h1>
+            
+            <form id="quoteForm" class="space-y-6">
+                <div>
+                    <h2 class="text-xl font-semibold mb-4">Sélectionnez vos Services</h2>
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div>
+                            <h3 class="font-medium mb-2">Gardiennage</h3>
+                            <div class="space-y-2">
+                                <label class="flex items-center">
+                                    <input type="checkbox" name="service" value="gardiennage-residentiel" 
+                                           class="mr-2 service-checkbox" data-type="gardiennage" data-category="residentiel">
+                                    Gardiennage Résidentiel
+                                </label>
+                                <div class="ml-6 hidden agent-input">
+                                    <label>Nombre d'agents:</label>
+                                    <input type="number" min="1" value="1" 
+                                           class="w-20 px-2 py-1 border rounded agent-count" 
+                                           data-base-price="80000" 
+                                           data-discount-threshold="3" 
+                                           data-discount-rate="0.1">
+                                </div>
+                            </div>
+                            <div class="space-y-2">
+                                <label class="flex items-center">
+                                    <input type="checkbox" name="service" value="gardiennage-entreprise" 
+                                           class="mr-2 service-checkbox" data-type="gardiennage" data-category="entreprise">
+                                    Gardiennage Entreprise
+                                </label>
+                                <div class="ml-6 hidden agent-input">
+                                    <label>Nombre d'agents:</label>
+                                    <input type="number" min="1" value="1" 
+                                           class="w-20 px-2 py-1 border rounded agent-count" 
+                                           data-base-price="150000" 
+                                           data-discount-threshold="5" 
+                                           data-discount-rate="0.15">
+                                </div>
+                            </div>
+                            <div class="space-y-2">
+                                <label class="flex items-center">
+                                    <input type="checkbox" name="service" value="gardiennage-evenement" 
+                                           class="mr-2 service-checkbox" data-type="gardiennage" data-category="evenement">
+                                    Gardiennage Événement
+                                </label>
+                                <div class="ml-6 hidden agent-input">
+                                    <label>Nombre d'agents:</label>
+                                    <input type="number" min="1" value="1" 
+                                           class="w-20 px-2 py-1 border rounded agent-count" 
+                                           data-base-price="20000" 
+                                           data-discount-threshold="10" 
+                                           data-discount-rate="0.2">
+                                    <label class="block mt-2">Nombre de jours:</label>
+                                    <input type="number" min="1" value="1" 
+                                           class="w-20 px-2 py-1 border rounded days-count">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <h3 class="font-medium mb-2">Vidéosurveillance</h3>
+                            <div class="space-y-2">
+                                <label class="flex items-center">
+                                    <input type="checkbox" name="service" value="video-residentiel" 
+                                           class="mr-2 service-checkbox" data-type="video">
+                                    Vidéosurveillance Résidentiel
+                                </label>
+                            </div>
+                            <div class="space-y-2">
+                                <label class="flex items-center">
+                                    <input type="checkbox" name="service" value="video-entreprise" 
+                                           class="mr-2 service-checkbox" data-type="video">
+                                    Vidéosurveillance Entreprise
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-gray-100 p-4 rounded">
+                    <h3 class="font-semibold mb-2">Résumé du Devis</h3>
+                    <div id="quoteSummary" class="space-y-2"></div>
+                    <div class="mt-4 font-bold text-xl">
+                        Total: <span id="totalPrice">0</span> FCFA
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="font-semibold mb-2 text-sm md:text-base">Informations de Contact</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
+                        <input type="text" placeholder="Nom" required 
+                               class="w-full px-2 py-1.5 md:px-3 md:py-2 border rounded text-sm md:text-base">
+                        <input type="tel" placeholder="Téléphone" required 
+                               class="w-full px-2 py-1.5 md:px-3 md:py-2 border rounded text-sm md:text-base">
+                        <input type="email" placeholder="Email Facultatif"
+                               class="w-full px-2 py-1.5 md:px-3 md:py-2 border rounded col-span-1 md:col-span-2 text-sm md:text-base">
+                    </div>
+                    <h3 class="mt-2 text-xs md:text-sm text-gray-600">Une fois le devis terminé, veuillez cliquer sur le bouton WhatsApp à droite et nous envoyer le devis. Merci.</h3>
+                </div>
+
+                <button type="submit" 
+                    class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition" style="color: black; background-color: #c59b73;">
+                    Demander un Devis
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <div class="floating-buttons">
+        <button onclick="openWhatsApp()" 
+            class="bg-green-500 text-white hover:bg-green-600">
+            <i class="fab fa-whatsapp text-2xl"></i>
+        </button>
+        <button onclick="makeDirectCall()" 
+            class="bg-blue-500 text-white hover:bg-blue-600">
+            <i class="fas fa-phone text-2xl"></i>
+        </button>
+    </div>
+
+    <footer class="bg-blue-600 text-white py-6" style="color: #c59b73; background-color: white;">
+        <div class="container mx-auto text-center">
+            <p>© 2024 Soges Sécurité. Tous droits réservés.</p>
+            <div class="mt-4">
+                <a href="#" class="mx-2">Mentions Légales</a>
+                <a href="#" class="mx-2">Politique de Confidentialité</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function calculateServicePrice(checkbox, agentInput) {
+            const serviceValue = checkbox.value;
+            let price = 0;
+            let summary = '';
+
+            switch(serviceValue) {
+                case 'gardiennage-residentiel':
+                    const residentialAgentCount = agentInput.querySelector('.agent-count');
+                    const residentialBasePrice = parseInt(residentialAgentCount.dataset.basePrice);
+                    const residentialAgents = parseInt(residentialAgentCount.value);
+                    const residentialDiscountThreshold = parseInt(residentialAgentCount.dataset.discountThreshold);
+                    const residentialDiscountRate = parseFloat(residentialAgentCount.dataset.discountRate);
+
+                    price = residentialAgents * residentialBasePrice;
+                    if (residentialAgents >= residentialDiscountThreshold) {
+                        price *= (1 - residentialDiscountRate);
+                    }
+                    summary = `Gardiennage Résidentiel (${residentialAgents} agent(s)): ${price.toLocaleString()} FCFA`;
+                    break;
+
+                case 'gardiennage-entreprise':
+                    const enterpriseAgentCount = agentInput.querySelector('.agent-count');
+                    const enterpriseBasePrice = parseInt(enterpriseAgentCount.dataset.basePrice);
+                    const enterpriseAgents = parseInt(enterpriseAgentCount.value);
+                    const enterpriseDiscountThreshold = parseInt(enterpriseAgentCount.dataset.discountThreshold);
+                    const enterpriseDiscountRate = parseFloat(enterpriseAgentCount.dataset.discountRate);
+
+                    price = enterpriseAgents * enterpriseBasePrice;
+                    if (enterpriseAgents >= enterpriseDiscountThreshold) {
+                        price *= (1 - enterpriseDiscountRate);
+                    }
+                    summary = `Gardiennage Entreprise (${enterpriseAgents} agent(s)): ${price.toLocaleString()} FCFA`;
+                    break;
+
+                case 'gardiennage-evenement':
+                    const eventAgentCount = agentInput.querySelector('.agent-count');
+                    const daysCount = agentInput.querySelector('.days-count');
+                    const eventBasePrice = parseInt(eventAgentCount.dataset.basePrice);
+                    const eventAgents = parseInt(eventAgentCount.value);
+                    const eventDays = parseInt(daysCount.value);
+                    const eventDiscountThreshold = parseInt(eventAgentCount.dataset.discountThreshold);
+                    const eventDiscountRate = parseFloat(eventAgentCount.dataset.discountRate);
+
+                    price = eventAgents * eventBasePrice * eventDays;
+                    if (eventAgents >= eventDiscountThreshold) {
+                        price *= (1 - eventDiscountRate);
+                    }
+                    summary = `Gardiennage Événement (${eventAgents} agent(s), ${eventDays} jour(s)): ${price.toLocaleString()} FCFA`;
+                    break;
+
+                case 'video-residentiel':
+                    price = 80000;
+                    summary = `Vidéosurveillance Résidentiel: ${price.toLocaleString()} FCFA`;
+                    break;
+
+                case 'video-entreprise':
+                    price = 120000;
+                    summary = `Vidéosurveillance Entreprise: ${price.toLocaleString()} FCFA`;
+                    break;
+            }
+
+            return { price, summary };
+        }
+
+        function openWhatsApp() {
+            const whatsappNumber = '+22788371817';
+            window.open(`https://wa.me/${whatsappNumber}`, '_blank');
+        }
+
+        function makeDirectCall() {
+            window.location.href = 'tel:+22788371817';
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const serviceCheckboxes = document.querySelectorAll('.service-checkbox');
+            const quoteSummary = document.getElementById('quoteSummary');
+            const totalPriceElement = document.getElementById('totalPrice');
+
+            function updateQuote() {
+                let totalPrice = 0;
+                quoteSummary.innerHTML = '';
+
+                serviceCheckboxes.forEach(checkbox => {
+                    if (checkbox.checked) {
+                        const agentInput = checkbox.closest('.space-y-2').querySelector('.agent-input');
+                        const serviceDetails = calculateServicePrice(checkbox, agentInput);
+                        
+                        if (serviceDetails) {
+                            totalPrice += serviceDetails.price;
+                            const summaryItem = document.createElement('div');
+                            summaryItem.textContent = serviceDetails.summary;
+                            quoteSummary.appendChild(summaryItem);
+                        }
+                    }
+                });
+
+                totalPriceElement.textContent = totalPrice.toLocaleString();
+            }
+
+            serviceCheckboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    const agentInput = this.closest('.space-y-2').querySelector('.agent-input');
+                    if (agentInput) {
+                        agentInput.classList.toggle('hidden', !this.checked);
+                    }
+                    updateQuote();
+                });
+
+                const agentInput = checkbox.closest('.space-y-2').querySelector('.agent-input');
+                if (agentInput) {
+                    agentInput.querySelectorAll('input').forEach(input => {
+                        input.addEventListener('input', updateQuote);
+                    });
+                }
+            });
+
+            document.getElementById('quoteForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const selectedServices = document.querySelectorAll('.service-checkbox:checked');
+                if (selectedServices.length === 0) {
+                    alert('Veuillez sélectionner au moins un service.');
+                    return;
+                }
+
+                const formData = {
+                    services: [],
+                    totalPrice: document.getElementById('totalPrice').textContent,
+                    contact: {
+                        name: document.querySelector('input[placeholder="Nom"]').value.trim(),
+                        phone: document.querySelector('input[placeholder="Téléphone"]').value.trim(),
+                        email: document.querySelector('input[placeholder="Email"]').value.trim()
+                    }
+                };
+
+                if (!formData.contact.name || !formData.contact.phone || !formData.contact.email) {
+                    alert('Veuillez remplir tous les champs de contact.');
+                    return;
+                }
+
+                selectedServices.forEach(checkbox => {
+                    const agentInput = checkbox.closest('.space-y-2').querySelector('.agent-input');
+                    const serviceDetails = calculateServicePrice(checkbox, agentInput);
+                    formData.services.push(serviceDetails.summary);
+                });
+
+                try {
+                    const { jsPDF } = window.jspdf;
+                    const doc = new jsPDF();
+                    
+                    // PDF Generation Configuration
+                    doc.setFont('helvetica');
+                    doc.text('Devis - Soges Group International', 105, 20, { align: 'center' });
+                    
+                    // Contact Information
+                    doc.setFontSize(10);
+                    doc.text(`Nom: ${formData.contact.name}`, 20, 40);
+                    doc.text(`Téléphone: ${formData.contact.phone}`, 20, 50);
+                    doc.text(`Email: ${formData.contact.email}`, 20, 60);
+
+                    // Services
+                    doc.text('Services sélectionnés:', 20, 80);
+                    let yOffset = 90;
+                    formData.services.forEach((service, index) => {
+                        doc.text(`${index + 1}. ${service}`, 25, yOffset);
+                        yOffset += 10;
+                    });
+
+                    // Total Price
+                    doc.setFontSize(12);
+                    doc.setFont('helvetica', 'bold');
+                    doc.text(`Total: ${formData.totalPrice} FCFA`, 20, yOffset + 20);
+
+                    // Company Footer
+                    doc.setFontSize(8);
+                    doc.setFont('helvetica', 'normal');
+                    doc.text('© 2024 Soges Group International', 20, 280);
+                    doc.text('Devis valide pendant 30 jours', 20, 290);
+
+                    // Save PDF
+                    doc.save(`Devis_${formData.contact.name}_${new Date().toISOString().slice(0,10)}.pdf`);
+
+                    // Optional: Send quote via email or WhatsApp
+                    alert('Votre devis a été généré avec succès!');
+                } catch (error) {
+                    console.error('Erreur de génération de PDF:', error);
+                    alert('Une erreur est survenue lors de la génération du devis.');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
